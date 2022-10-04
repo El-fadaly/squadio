@@ -5,7 +5,6 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:squadio/business_logic/view_models/home_view_model.dart';
 import 'package:squadio/config/custom_animation.dart';
-import 'package:squadio/services/download_image_service/download_image_service.dart';
 import 'package:squadio/services/service_locator.dart';
 import 'package:squadio/views/resources/routes_manager.dart';
 import 'package:squadio/views/resources/theme_manager.dart';
@@ -14,10 +13,9 @@ import 'package:squadio/views/screens/home_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  setupServiceLocator();
+  await setupServiceLocator();
   runApp(MyApp());
 }
-
 
 void configLoading() {
   EasyLoading.instance

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "180435485032",
+    "project_id": "squadio-caa40",
+    "storage_bucket": "squadio-caa40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180435485032:android:3eec79152953edc8d756dd",
+        "android_client_info": {
+          "package_name": "com.example.squadio.squadio"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180435485032-e5td4mp7aq1fc4cv1vd0ee7tsrbehsk5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBs9SZe6uQkMYX1T6O0WvFh-6bX1tWQjI8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180435485032-e5td4mp7aq1fc4cv1vd0ee7tsrbehsk5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

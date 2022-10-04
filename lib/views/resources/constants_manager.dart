@@ -16,4 +16,11 @@ class AppConstants {
   static const String imageDetailsUrl = "http://image.tmdb.org/t/p/original";
   static const String dataBaseKey = "popularPersonResponse";
   static const String dataBaseBoxName = 'dataBox';
+
+  static const String remoteConfigKey = "enforced_min_version";
+
+  static const String playStoreLink =
+      "https://play.google.com/store/apps/details?id=com.example.squadio.squadio";
+  static const String appStoreLink =
+      "market://details?id=com.example.squadio.squadio";
 }

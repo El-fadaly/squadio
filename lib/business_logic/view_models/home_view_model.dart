@@ -1,6 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:squadio/business_logic/models/pooular_persons/images/images_model.dart';
 import 'package:squadio/business_logic/models/pooular_persons/images/profile_model.dart';
 import 'package:squadio/business_logic/models/pooular_persons/person_model.dart';
@@ -9,12 +11,16 @@ import 'package:squadio/business_logic/view_models/profile_view_model.dart';
 import 'package:squadio/services/api_services/popular_people_api_service/popular_people_api_service.dart';
 import 'package:squadio/services/database_services/popular_people_database_service/popular_people_database_service.dart';
 import 'package:squadio/services/dio_base_service/http_service.dart';
+import 'package:squadio/services/remote_config_service/remote_config_service.dart';
 import 'package:squadio/services/service_locator.dart';
+import 'package:squadio/services/update_checker_service/update_checker_service.dart';
 import 'package:squadio/views/resources/assets_manager.dart';
 import 'package:squadio/views/screens/person_details_screen.dart';
 import 'package:squadio/views/screens/profile_screen.dart';
 
 class HomeViewModel with ChangeNotifier {
+  var updateCheckerService = serviceLocator<UpdateCheckerService>();
+  var remoteConfigService = serviceLocator<RemoteConfigService>();
   var apiService = serviceLocator<PopularPeopleApiService>();
   var databaseService = serviceLocator<PopularPeopleDatabaseService>();
   var httpService = HttpService();
@@ -42,7 +48,12 @@ class HomeViewModel with ChangeNotifier {
   }
 
   void onClose() {
+    print("on close ");
     scrollController.dispose();
+  }
+
+  Future<bool> needToUpDate() async {
+    return updateCheckerService.updateCheck();
   }
 
   void setScrollControllerListener(context) {
