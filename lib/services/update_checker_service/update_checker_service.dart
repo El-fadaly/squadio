@@ -13,7 +13,6 @@ class UpdateCheckerService {
       var current = await currentAppVersionService.getAppCurrentVersion();
       var enforced = remoteConfigService.getEnforcedVersion;
 
-      print("enforced $enforced");
       if (enforced.isEmpty || current.isEmpty) {
         return false;
       }

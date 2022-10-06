@@ -7,6 +7,7 @@ import 'package:squadio/services/api_services/popular_people_api_service/popular
 import 'package:squadio/services/api_services/popular_people_api_service/popular_people_dio_service.dart';
 import 'package:squadio/services/database_services/popular_people_database_service/popular_people_database_service.dart';
 import 'package:squadio/services/database_services/popular_people_database_service/popular_people_hive_service.dart';
+import 'package:squadio/services/database_services/popular_people_database_service/popular_people_sqflite_service.dart';
 import 'package:squadio/services/remote_config_service/remote_config_service.dart';
 import 'package:squadio/services/update_checker_service/current_app_version_service.dart';
 import 'package:squadio/services/update_checker_service/update_checker_service.dart';
@@ -19,8 +20,11 @@ Future setupServiceLocator() async {
   serviceLocator.registerLazySingleton<PopularPeopleApiService>(
     () => PopularPeopleDioService(),
   );
+  // serviceLocator.registerLazySingleton<PopularPeopleDatabaseService>(
+  //   () => PopularPeopleHiveService(),
+  // );
   serviceLocator.registerLazySingleton<PopularPeopleDatabaseService>(
-    () => PopularPeopleHiveService(),
+    () => PopularPeopleSqfLiteService(),
   );
 
   serviceLocator.registerLazySingleton<HomeViewModel>(() => HomeViewModel());

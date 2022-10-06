@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -42,6 +44,7 @@ class HomeViewModel with ChangeNotifier {
 
   bool isGrid = false;
   bool isLoadingPersonData = false;
+
   void initData(context) async {
     getInitialData();
     setScrollControllerListener(context);
@@ -102,14 +105,17 @@ class HomeViewModel with ChangeNotifier {
   }
 
   void getPersonsDataFromJson(json) {
-    popularPersonModel = PopularPersonModel.fromJson(json);
-    if (popularPersonModel.results?.isNotEmpty ?? false) {
-      persons.addAll(popularPersonModel.results ?? []);
-      notifyListeners();
+    if (json != null) {
+      popularPersonModel = PopularPersonModel.fromJson(json);
+      if (popularPersonModel.results?.isNotEmpty ?? false) {
+        persons.addAll(popularPersonModel.results ?? []);
+        notifyListeners();
+      }
     }
   }
 
   void getPopularPeopleFromService() async {
+    print("getting  data ");
     var response = await apiService.getPopularPeople(page);
     if (response.data != null) {
       getPersonsDataFromJson(response.data);

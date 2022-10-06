@@ -23,11 +23,12 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var homeViewModel = serviceLocator<HomeViewModel>();
-
+  late final Future<bool> needUpdate;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    needUpdate = homeViewModel.needToUpDate();
   }
 
   @override
@@ -46,65 +47,74 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
+    int counter = 0;
     return FutureBuilder(
-      future: homeViewModel.needToUpDate(),
+      future: needUpdate,
       builder: (_, AsyncSnapshot asyncSnapshot) {
-        if (asyncSnapshot.connectionState != ConnectionState.done) {
-          return const CustomProgressIndicator();
-        } else if (!asyncSnapshot.data) {
-          return AppUpdateScreen();
-        } else {
-          /// load  data  for  home  screen
-          homeViewModel.initData(context);
-          return SafeArea(
-            child: Scaffold(
-              body: Padding(
-                padding: const EdgeInsets.all(AppPadding.p10),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    const NavBar(title: AppStrings.homeTitle),
-                    Expanded(
-                      child: Consumer<HomeViewModel>(
-                        builder: (context, model, child) => ListView.builder(
-                          controller: model.scrollController,
-                          scrollDirection: Axis.vertical,
-                          itemCount: model.persons.length + 1,
-                          itemBuilder: (_, index) {
-                            if (index < model.persons.length) {
-                              final person = model.persons[index];
-                              return PersonCard(
-                                field: person.knownForDepartment ??
-                                    AppStrings.defaultEmptyString,
-                                name: person.name ??
-                                    AppStrings.defaultEmptyString,
-                                imageUrl: model.getImageUrl(person.profilePath),
-                                onTapped: () => model.openPersonDetailsScreen(
-                                    context, index),
-                              );
-                            } else {
-                              return Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: AppPadding.p28,
-                                ),
-                                child: Center(
-                                  child: model.hasMoreData
-                                      ? const CircularProgressIndicator()
-                                      : const CustomText(
-                                          text: AppStrings.noMoreActors,
-                                        ),
-                                ),
-                              );
-                            }
-                          },
+        print("counter$counter");
+        counter++;
+        if (asyncSnapshot.hasData) {
+          print("in  data true");
+          if (asyncSnapshot.data) {
+            return AppUpdateScreen();
+          } else {
+            /// load  data  for  home  screen
+            print("lodaing  from state");
+            homeViewModel.initData(context);
+            return SafeArea(
+              child: Scaffold(
+                body: Padding(
+                  padding: const EdgeInsets.all(AppPadding.p10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      const NavBar(title: AppStrings.homeTitle),
+                      Expanded(
+                        child: Consumer<HomeViewModel>(
+                          builder: (context, model, child) => ListView.builder(
+                            controller: model.scrollController,
+                            scrollDirection: Axis.vertical,
+                            itemCount: model.persons.length + 1,
+                            itemBuilder: (_, index) {
+                              if (index < model.persons.length) {
+                                final person = model.persons[index];
+                                return PersonCard(
+                                  field: person.knownForDepartment ??
+                                      AppStrings.defaultEmptyString,
+                                  name: person.name ??
+                                      AppStrings.defaultEmptyString,
+                                  imageUrl:
+                                      model.getImageUrl(person.profilePath),
+                                  onTapped: () => model.openPersonDetailsScreen(
+                                      context, index),
+                                );
+                              } else {
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: AppPadding.p28,
+                                  ),
+                                  child: Center(
+                                    child: model.hasMoreData
+                                        ? const CircularProgressIndicator()
+                                        : const CustomText(
+                                            text: AppStrings.noMoreActors,
+                                          ),
+                                  ),
+                                );
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
+            );
+          }
+        } else {
+          print("in waiting ");
+          return const CustomProgressIndicator();
         }
       },
     );

@@ -16,6 +16,8 @@ class AppConstants {
   static const String imageDetailsUrl = "http://image.tmdb.org/t/p/original";
   static const String dataBaseKey = "popularPersonResponse";
   static const String dataBaseBoxName = 'dataBox';
+  static const String dataBaseName = 'dataBox.db';
+  static const String dataBaseTableName = 'movieDatabase';
 
   static const String remoteConfigKey = "enforced_min_version";
 
