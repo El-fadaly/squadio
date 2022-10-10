@@ -1,3 +1,6 @@
+import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/constants_manager.dart';
+
 class ProfileModel {
   double? aspectRatio;
   int? height;
@@ -25,4 +28,10 @@ class ProfileModel {
     voteCount = json['vote_count'];
     width = json['width'];
   }
+  String get getImageUrl => filePath != null
+      ? AppConstants.imageDetailsUrl + "$filePath"
+      : ImageNetworkUrl.defaultPersonImage;
+
+  double get getWidth => width?.toDouble() ?? double.infinity;
+  double get getHeight => width?.toDouble() ?? double.infinity;
 }

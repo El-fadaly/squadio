@@ -17,6 +17,8 @@ void main() async {
   runApp(MyApp());
 }
 
+/// CR: it would be better if it was in style/theme folder for its own
+/// the file structure`ll be better if every "resource" in different file like ALL theming in a folder & All consts ..etc
 void configLoading() {
   EasyLoading.instance
     ..displayDuration = const Duration(milliseconds: 100)

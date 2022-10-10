@@ -1,4 +1,7 @@
 import 'package:squadio/business_logic/models/pooular_persons/known_for_model.dart';
+import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/constants_manager.dart';
+import 'package:squadio/views/resources/strings_manager.dart';
 
 class PersonModel {
   bool? adult;
@@ -50,4 +53,26 @@ class PersonModel {
     data['profile_path'] = profilePath;
     return data;
   }
+
+  String get getKnownForDepartment =>
+      knownForDepartment ?? AppStrings.defaultEmptyString;
+
+  String get getName => name ?? AppStrings.defaultEmptyString;
+  String get getImageUrl => profilePath != null
+      ? AppConstants.imageDetailsUrl + "$profilePath"
+      : ImageNetworkUrl.defaultPersonImage;
+
+  String get getGender {
+    if (gender != null) {
+      if (gender! >= 1 && gender! <= 2) {
+        return gender == 1 ? "female" : "male";
+      } else {
+        return "unknown";
+      }
+    } else {
+      return "unknown";
+    }
+  }
+
+  String get getPopularity => (popularity ?? 0).toString();
 }

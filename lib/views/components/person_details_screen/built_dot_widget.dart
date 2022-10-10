@@ -3,8 +3,8 @@ import 'package:squadio/views/resources/color_manager.dart';
 import 'package:squadio/views/resources/constants_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
 
-class BuiltDots extends StatelessWidget {
-  const BuiltDots({
+class BuiltIndicatorDots extends StatelessWidget {
+  const BuiltIndicatorDots({
     Key? key,
     required this.isSelected,
   }) : super(key: key);

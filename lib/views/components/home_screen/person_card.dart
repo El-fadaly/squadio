@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:squadio/views/components/custom_cached_network_image.dart';
+import 'package:squadio/views/components/custom_error_icon.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
 import 'package:squadio/config/size_config.dart';
 import 'package:squadio/views/components/progress_indicator.dart';
@@ -41,16 +43,10 @@ class PersonCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(
                     AppBorderRadius.r10,
                   ),
-                  child: CachedNetworkImage(
+                  child: CustomCachedNetworkImage(
+                    imageUrl: imageUrl,
                     height: SizeConfig.screenHeight / 12,
                     width: SizeConfig.screenWidth / 5,
-                    fit: BoxFit.fill,
-                    imageUrl: imageUrl,
-                    alignment: Alignment.center,
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    placeholder: (context, url) =>
-                        const CustomProgressIndicator(),
                   ),
                 ),
                 const SizedBox(

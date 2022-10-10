@@ -15,7 +15,7 @@ class ProfileViewModel {
     try {
       EasyLoading.show();
 
-      var response = await GallerySaver.saveImage(getImageUrl());
+      var response = await GallerySaver.saveImage(profile.getImageUrl);
 
       if (response ?? false) {
         showSnackBar(context, success: true);
@@ -39,9 +39,5 @@ class ProfileViewModel {
         ),
       ),
     );
-  }
-
-  String getImageUrl() {
-    return '${AppConstants.imageDetailsUrl}${profile.filePath}';
   }
 }

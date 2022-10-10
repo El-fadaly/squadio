@@ -4,7 +4,7 @@ import 'package:squadio/views/resources/constants_manager.dart';
 class RemoteConfigService {
   final FirebaseRemoteConfig _remoteConfig = FirebaseRemoteConfig.instance;
 
-  final defaults = <String, dynamic>{AppConstants.remoteConfigKey: "1.0.1"};
+  final defaults = <String, dynamic>{AppConstants.remoteConfigKey: "1.0.0"};
 
   String get getEnforcedVersion =>
       _remoteConfig.getString(AppConstants.remoteConfigKey);

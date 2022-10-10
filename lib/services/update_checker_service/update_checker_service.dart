@@ -6,7 +6,7 @@ class UpdateCheckerService {
   var remoteConfigService = serviceLocator<RemoteConfigService>();
   var currentAppVersionService = serviceLocator<CurrentAppVersionService>();
 
-  Future<bool> updateCheck() async {
+  Future<bool> checkForUpdate() async {
     try {
       await remoteConfigService.initialise();
 
@@ -16,12 +16,9 @@ class UpdateCheckerService {
       if (enforced.isEmpty || current.isEmpty) {
         return false;
       }
-      final List<dynamic> currentVersion =
-          current.split('.').map((String number) => int.parse(number)).toList();
-      final List<dynamic> enforcedVersion = enforced
-          .split('.')
-          .map((String number) => int.parse(number))
-          .toList();
+      final List<dynamic> currentVersion = getListFromString(current);
+      final List<dynamic> enforcedVersion = getListFromString(enforced);
+
       for (var i = 0; i < enforcedVersion.length; i++) {
         if (enforcedVersion[i] > currentVersion[i]) {
           return true;
@@ -36,5 +33,13 @@ class UpdateCheckerService {
       print("exception when checking  for  updates$e ");
       return false;
     }
+  }
+
+  List<dynamic> getListFromString(String text) {
+    return text
+        .replaceAll(RegExp('"'), "")
+        .split('.')
+        .map((String number) => int.parse(number))
+        .toList();
   }
 }

@@ -25,21 +25,24 @@ class KnownForWidget extends StatelessWidget {
       elevation: AppSize.s8,
       child: Column(
         children: [
-          // image
+          /// image
           Expanded(
-            child: CustomCachedNetworkImage(image: image),
+            child: CustomCachedNetworkImage(imageUrl: image),
           ),
           Padding(
             padding: const EdgeInsets.all(AppPadding.p8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /// name
                 CustomText(
                   text: name,
                 ),
                 const SizedBox(
                   height: AppSize.s4,
                 ),
+
+                /// rating  bar  and  value
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

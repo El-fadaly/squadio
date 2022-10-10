@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squadio/business_logic/view_models/home_view_model.dart';
@@ -42,7 +41,7 @@ class PersonDetailsScreen extends StatelessWidget {
               builder: (_, model, child) => model.isGrid
                   ?
 
-                  /// image  grid
+                  /// image  grid view
 
                   SizedBox(
                       height: SizeConfig.actualHeight / 3,
@@ -52,14 +51,13 @@ class PersonDetailsScreen extends StatelessWidget {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: AppConstants.gridCrossAxisCount,
                         ),
-                        itemBuilder: (_, index) {
-                          return ProfileImage(
-                            profileImage: model.getImageUrl(
-                              model.profiles[index].filePath ?? "",
-                            ),
-                            onTap: () => model.onProfileTapped(context, index),
-                          );
-                        },
+                        itemBuilder: (_, index) => ProfileImage(
+                          profileImage: model.profiles[index].getImageUrl,
+                          onTap: () => model.onProfileTapped(
+                            context,
+                            index,
+                          ),
+                        ),
                         itemCount: model.profiles.length,
                       ),
                     )
@@ -84,17 +82,15 @@ class PersonDetailsScreen extends StatelessWidget {
                             enlargeCenterPage: true,
                           ),
                           itemCount: model.profiles.length,
-                          itemBuilder: (context, itemIndex, realIndex) {
-                            return ProfileImage(
-                              profileImage: model.getImageUrl(
-                                model.profiles[itemIndex].filePath ?? "",
-                              ),
-                              onTap: () =>
-                                  model.onProfileTapped(context, itemIndex),
-                            );
-                          },
+                          itemBuilder: (context, itemIndex, realIndex) =>
+                              ProfileImage(
+                            profileImage: model.profiles[itemIndex].getImageUrl,
+                            onTap: () =>
+                                model.onProfileTapped(context, itemIndex),
+                          ),
                         ),
 
+                        /// dots indicators
                         Consumer<HomeViewModel>(
                           builder: (_, model, child) => SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
@@ -102,7 +98,7 @@ class PersonDetailsScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(
                                 model.profiles.length,
-                                (index) => BuiltDots(
+                                (index) => BuiltIndicatorDots(
                                   isSelected: model.imageIndexBanner == index,
                                 ),
                               ),
@@ -125,19 +121,17 @@ class PersonDetailsScreen extends StatelessWidget {
                 children: [
                   ///  gender
                   PopularityRateWidget(
-                    text: homeModel.getGender(
-                      genderCode: homeModel.selectedPerson.gender ?? -1,
-                    ),
+                    text: homeModel.selectedPerson.getGender,
                   ),
 
                   /// popularity
                   PopularityRateWidget(
-                    text: "${homeModel.selectedPerson.popularity}",
+                    text: homeModel.selectedPerson.getPopularity,
                   ),
 
                   /// known for
                   PopularityRateWidget(
-                    text: "${homeModel.selectedPerson.knownForDepartment}",
+                    text: homeModel.selectedPerson.getKnownForDepartment,
                   ),
                 ],
               ),
@@ -178,11 +172,15 @@ class PersonDetailsScreen extends StatelessWidget {
                 itemCount: homeModel.selectedPerson.knownFor?.length,
                 itemBuilder: (context, itemIndex, realIndex) {
                   final item = homeModel.selectedPerson.knownFor?[itemIndex];
-                  return KnownForWidget(
-                    image: homeModel.getImageUrl(item?.posterPath ?? ""),
-                    name: item?.originalTitle ?? item?.originalName ?? " ",
-                    rate: (item?.voteAverage ?? 0.0) / 2,
-                  );
+                  if (item != null) {
+                    return KnownForWidget(
+                      image: item.getImageUrl,
+                      name: item.getName,
+                      rate: item.getRating,
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
                 },
               ),
             ),

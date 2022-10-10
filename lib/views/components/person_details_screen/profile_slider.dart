@@ -38,7 +38,7 @@ class ProfileImage extends StatelessWidget {
               AppBorderRadius.r10,
             ),
             child: CustomCachedNetworkImage(
-              image: profileImage,
+              imageUrl: profileImage,
             ),
           ),
         ),

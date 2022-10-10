@@ -44,7 +44,7 @@ class NavBar extends StatelessWidget {
                   ),
                 )
               : const SizedBox(
-                  width: 10,
+                  width: AppSize.s12,
                 ),
         ],
       ),

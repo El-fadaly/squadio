@@ -1,10 +1,6 @@
-import 'dart:convert';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:squadio/business_logic/models/pooular_persons/images/images_model.dart';
 import 'package:squadio/business_logic/models/pooular_persons/images/profile_model.dart';
 import 'package:squadio/business_logic/models/pooular_persons/person_model.dart';
@@ -25,13 +21,11 @@ class HomeViewModel with ChangeNotifier {
   var remoteConfigService = serviceLocator<RemoteConfigService>();
   var apiService = serviceLocator<PopularPeopleApiService>();
   var databaseService = serviceLocator<PopularPeopleDatabaseService>();
-  var httpService = HttpService();
   var hasMoreData = true;
 
   final scrollController = ScrollController();
 
   late PopularPersonModel popularPersonModel;
-  late ImagesModel images;
 
   PersonModel selectedPerson = PersonModel();
 
@@ -39,27 +33,23 @@ class HomeViewModel with ChangeNotifier {
   List<ProfileModel> profiles = [];
 
   int page = 1;
-  int imageIndexBanner = 0;
-  int knownForIndexBanner = 0;
-
-  bool isGrid = false;
   bool isLoadingPersonData = false;
 
-  void initData(context) async {
+  /// home  screen functions
+  void initData() async {
     getInitialData();
-    setScrollControllerListener(context);
+    setScrollControllerListener();
   }
 
   void onClose() {
-    print("on close ");
     scrollController.dispose();
   }
 
-  Future<bool> needToUpDate() async {
-    return updateCheckerService.updateCheck();
+  Future<bool> appNeedToUpDate() async {
+    return updateCheckerService.checkForUpdate();
   }
 
-  void setScrollControllerListener(context) {
+  void setScrollControllerListener() {
     scrollController.addListener(
       () {
         if (scrollController.position.maxScrollExtent ==
@@ -75,20 +65,6 @@ class HomeViewModel with ChangeNotifier {
     );
   }
 
-  String getGender({required num genderCode}) {
-    if (genderCode >= 1 && genderCode <= 2) {
-      return genderCode == 1 ? "female" : "male";
-    } else {
-      return "unknown";
-    }
-  }
-
-  String getImageUrl(imageUrl) {
-    return imageUrl != null
-        ? 'http://image.tmdb.org/t/p/original' + imageUrl
-        : ImageNetworkUrl.defaultPersonImage;
-  }
-
   void getInitialData() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile ||
@@ -97,6 +73,18 @@ class HomeViewModel with ChangeNotifier {
     } else if (connectivityResult == ConnectivityResult.none) {
       getDataFromLocalDatabase();
     }
+  }
+
+  void getPopularPeopleFromService() async {
+    var response = await apiService.getPopularPeople(page);
+    if (response.data != null) {
+      getPersonsDataFromJson(response.data);
+      if (page == 1) {
+        databaseService.savePopularPeopleToDatabase(response.data);
+      }
+      page++;
+    }
+    notifyListeners();
   }
 
   void getDataFromLocalDatabase() async {
@@ -114,41 +102,27 @@ class HomeViewModel with ChangeNotifier {
     }
   }
 
-  void getPopularPeopleFromService() async {
-    print("getting  data ");
-    var response = await apiService.getPopularPeople(page);
-    if (response.data != null) {
-      getPersonsDataFromJson(response.data);
-      if (page == 1) {
-        databaseService.savePopularPeopleToDatabase(response.data);
-      }
-      page++;
-    }
-    notifyListeners();
-  }
-
-  Future<void> getPersonImagesFromService(context) async {
-    EasyLoading.show();
-    profiles = await apiService.getPersonImages(selectedPerson.id ?? 0);
-    EasyLoading.dismiss();
-    // notifyListeners();
-  }
-
   void openPersonDetailsScreen(context, index) async {
     if (!isLoadingPersonData) {
       isLoadingPersonData = true;
       selectedPerson = persons[index];
-      await getPersonImagesFromService(context);
+      await getPersonImagesFromService();
       isLoadingPersonData = false;
       Navigator.pushNamed(context, PersonDetailsScreen.id);
     }
   }
 
-  void onProfileTapped(context, index) {
-    var profileModel = serviceLocator<ProfileViewModel>();
-    profileModel.profile = profiles[index];
-    profileModel.selectedPersonName = selectedPerson.name ?? "";
-    Navigator.pushNamed(context, ProfileScreen.id);
+  /// person details  screen
+
+  int imageIndexBanner = 0;
+  int knownForIndexBanner = 0;
+
+  bool isGrid = false;
+
+  Future<void> getPersonImagesFromService() async {
+    EasyLoading.show();
+    profiles = await apiService.getPersonImages(selectedPerson.id ?? 0);
+    EasyLoading.dismiss();
   }
 
   void onImageCarouselPageChanged(index) {
@@ -164,5 +138,12 @@ class HomeViewModel with ChangeNotifier {
   void changeProfilesLayoutShape() {
     isGrid = !isGrid;
     notifyListeners();
+  }
+
+  void onProfileTapped(context, index) {
+    var profileModel = serviceLocator<ProfileViewModel>();
+    profileModel.profile = profiles[index];
+    profileModel.selectedPersonName = selectedPerson.name ?? "";
+    Navigator.pushNamed(context, ProfileScreen.id);
   }
 }

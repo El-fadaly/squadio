@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:squadio/business_logic/view_models/home_view_model.dart';
-import 'package:squadio/services/remote_config_service/remote_config_service.dart';
 import 'package:squadio/services/service_locator.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
 import 'package:squadio/views/components/home_screen/person_card.dart';
@@ -23,18 +22,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var homeViewModel = serviceLocator<HomeViewModel>();
-  late final Future<bool> needUpdate;
+  late Future<bool> needUpdate;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    needUpdate = homeViewModel.needToUpDate();
-  }
-
-  @override
-  void deactivate() {
-    print("deactivate ");
-    super.deactivate();
+    needUpdate = homeViewModel.appNeedToUpDate();
   }
 
   @override
@@ -47,20 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
 
-    int counter = 0;
     return FutureBuilder(
       future: needUpdate,
       builder: (_, AsyncSnapshot asyncSnapshot) {
-        print("counter$counter");
-        counter++;
         if (asyncSnapshot.hasData) {
-          print("in  data true");
           if (asyncSnapshot.data) {
             return AppUpdateScreen();
           } else {
             /// load  data  for  home  screen
-            print("lodaing  from state");
-            homeViewModel.initData(context);
+            homeViewModel.initData();
             return SafeArea(
               child: Scaffold(
                 body: Padding(
@@ -74,28 +63,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context, model, child) => ListView.builder(
                             controller: model.scrollController,
                             scrollDirection: Axis.vertical,
+
+                            /// item count is persons  + 1   because there is one  more  item which is the progress indicator item or no more  data to show
                             itemCount: model.persons.length + 1,
                             itemBuilder: (_, index) {
+                              /// persons  items
                               if (index < model.persons.length) {
                                 final person = model.persons[index];
                                 return PersonCard(
-                                  field: person.knownForDepartment ??
-                                      AppStrings.defaultEmptyString,
-                                  name: person.name ??
-                                      AppStrings.defaultEmptyString,
-                                  imageUrl:
-                                      model.getImageUrl(person.profilePath),
+                                  field: person.getKnownForDepartment,
+                                  name: person.getName,
+                                  imageUrl: person.getImageUrl,
                                   onTapped: () => model.openPersonDetailsScreen(
-                                      context, index),
+                                    context,
+                                    index,
+                                  ),
                                 );
-                              } else {
+                              }
+
+                              /// last  item which is the progress indicator item or no more  data to show
+                              else {
                                 return Padding(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: AppPadding.p28,
                                   ),
                                   child: Center(
                                     child: model.hasMoreData
-                                        ? const CircularProgressIndicator()
+                                        ? const CustomProgressIndicator()
                                         : const CustomText(
                                             text: AppStrings.noMoreActors,
                                           ),
@@ -113,7 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         } else {
-          print("in waiting ");
           return const CustomProgressIndicator();
         }
       },

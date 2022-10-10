@@ -1,7 +1,7 @@
-const String imagePath = "assets/images";
+class ImageAssetsPaths {
+  static const String imagesFolderPath = "assets/images";
 
-class ImageAssets {
-  static const String splashLogo = "$imagePath/splash_logo.png";
+  static const String splashLogo = "$imagesFolderPath/splash_logo.png";
 }
 
 class ImageNetworkUrl {

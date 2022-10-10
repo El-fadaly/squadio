@@ -1,3 +1,6 @@
+import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/constants_manager.dart';
+
 class KnownForModel {
   bool? adult;
   String? backdropPath;
@@ -87,4 +90,11 @@ class KnownForModel {
     data['original_name'] = originalName;
     return data;
   }
+
+  String get getImageUrl => posterPath != null
+      ? AppConstants.imageDetailsUrl + "$posterPath"
+      : ImageNetworkUrl.defaultPersonImage;
+  String get getName => originalTitle ?? originalName ?? " ";
+
+  double get getRating => (voteAverage ?? 0.0) / 2;
 }
