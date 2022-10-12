@@ -5,8 +5,9 @@ import 'package:squadio/views/components/custom_error_icon.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
 import 'package:squadio/views/components/person_details_screen/rating_bar.dart';
 import 'package:squadio/views/components/progress_indicator.dart';
-import 'package:squadio/views/resources/color_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
+import 'package:squadio/views/components/styled_spacers.dart';
 
 class KnownForWidget extends StatelessWidget {
   const KnownForWidget({
@@ -38,9 +39,7 @@ class KnownForWidget extends StatelessWidget {
                 CustomText(
                   text: name,
                 ),
-                const SizedBox(
-                  height: AppSize.s4,
-                ),
+                VSpace.xs,
 
                 /// rating  bar  and  value
                 Row(

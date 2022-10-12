@@ -11,11 +11,11 @@ import 'package:squadio/views/components/person_details_screen/built_dot_widget.
 import 'package:squadio/views/components/person_details_screen/profile_slider.dart';
 import 'package:squadio/views/components/person_details_screen/known_for_widget.dart';
 import 'package:squadio/views/components/person_details_screen/popularity_rate_widget.dart';
-import 'package:squadio/views/resources/assets_manager.dart';
-import 'package:squadio/views/resources/color_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
 import 'package:squadio/views/resources/constants_manager.dart';
-import 'package:squadio/views/resources/font_manager.dart';
+import 'package:squadio/views/resources/styles/font_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
+import 'package:squadio/views/components/styled_spacers.dart';
 
 class PersonDetailsScreen extends StatelessWidget {
   PersonDetailsScreen({Key? key}) : super(key: key);
@@ -109,11 +109,9 @@ class PersonDetailsScreen extends StatelessWidget {
                     ),
             ),
 
-            const SizedBox(
-              height: AppSize.s20,
-            ),
+            VSpace.lg,
 
-            // gender  and  popularity
+            /// gender  and  popularity
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: AppPadding.p10),
               child: Row(
@@ -137,9 +135,7 @@ class PersonDetailsScreen extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(
-              height: AppSize.s20,
-            ),
+            VSpace.lg,
 
             /// known for
             Padding(
@@ -150,9 +146,7 @@ class PersonDetailsScreen extends StatelessWidget {
                 fontColor: ColorManager.black,
               ),
             ),
-            const SizedBox(
-              height: AppSize.s12,
-            ),
+            VSpace.med,
 
             Expanded(
               child: CarouselSlider.builder(

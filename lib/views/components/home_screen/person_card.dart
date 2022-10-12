@@ -1,11 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:squadio/views/components/custom_cached_network_image.dart';
-import 'package:squadio/views/components/custom_error_icon.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
 import 'package:squadio/config/size_config.dart';
-import 'package:squadio/views/components/progress_indicator.dart';
 import 'package:squadio/views/resources/values_manager.dart';
+import 'package:squadio/views/components/styled_spacers.dart';
 
 class PersonCard extends StatelessWidget {
   const PersonCard({
@@ -49,9 +47,8 @@ class PersonCard extends StatelessWidget {
                     width: SizeConfig.screenWidth / 5,
                   ),
                 ),
-                const SizedBox(
-                  width: AppSize.s12,
-                ),
+
+                HSpace.med,
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -59,9 +56,8 @@ class PersonCard extends StatelessWidget {
                     CustomText(
                       text: name,
                     ),
-                    const SizedBox(
-                      height: AppSize.s12,
-                    ),
+
+                    VSpace.med,
 
                     /// field
                     CustomText(

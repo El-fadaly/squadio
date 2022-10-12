@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:squadio/views/resources/color_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
 import 'package:squadio/views/resources/constants_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
 

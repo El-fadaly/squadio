@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:squadio/views/components/custom_cached_network_image.dart';
 import 'package:squadio/views/components/custom_error_icon.dart';
 import 'package:squadio/views/components/progress_indicator.dart';
-import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/assets/assets_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
 
 class ProfileImage extends StatelessWidget {

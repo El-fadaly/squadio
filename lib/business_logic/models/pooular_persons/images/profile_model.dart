@@ -1,4 +1,4 @@
-import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/assets/assets_manager.dart';
 import 'package:squadio/views/resources/constants_manager.dart';
 
 class ProfileModel {

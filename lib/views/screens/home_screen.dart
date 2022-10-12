@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return FutureBuilder(
       future: needUpdate,
       builder: (_, AsyncSnapshot asyncSnapshot) {
-        if (asyncSnapshot.hasData) {
+        if (asyncSnapshot.connectionState == ConnectionState.done) {
           if (asyncSnapshot.data) {
             return AppUpdateScreen();
           } else {

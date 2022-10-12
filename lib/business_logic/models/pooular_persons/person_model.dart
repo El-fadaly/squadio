@@ -1,5 +1,5 @@
 import 'package:squadio/business_logic/models/pooular_persons/known_for_model.dart';
-import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/assets/assets_manager.dart';
 import 'package:squadio/views/resources/constants_manager.dart';
 import 'package:squadio/views/resources/strings_manager.dart';
 

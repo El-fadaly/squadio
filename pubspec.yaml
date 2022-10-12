@@ -38,7 +38,10 @@ dependencies:
   url_launcher: ^6.1.6
 
   sqflite: ^2.0.2
-
+  http: ^0.13.5
+  isolate_handler: ^1.0.1
+  flutter_isolate: ^2.0.3
+  image_gallery_saver: ^1.7.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

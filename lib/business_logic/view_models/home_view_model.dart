@@ -12,7 +12,7 @@ import 'package:squadio/services/dio_base_service/http_service.dart';
 import 'package:squadio/services/remote_config_service/remote_config_service.dart';
 import 'package:squadio/services/service_locator.dart';
 import 'package:squadio/services/update_checker_service/update_checker_service.dart';
-import 'package:squadio/views/resources/assets_manager.dart';
+import 'package:squadio/views/resources/assets/assets_manager.dart';
 import 'package:squadio/views/screens/person_details_screen.dart';
 import 'package:squadio/views/screens/profile_screen.dart';
 

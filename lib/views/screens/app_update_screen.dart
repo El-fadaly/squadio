@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:squadio/business_logic/view_models/app_update_view_model.dart';
 import 'package:squadio/config/size_config.dart';
 import 'package:squadio/services/service_locator.dart';
 import 'package:squadio/views/components/app_update_screen/custom_circle_button.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
-import 'package:squadio/views/resources/color_manager.dart';
-import 'package:squadio/views/resources/font_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
+import 'package:squadio/views/resources/styles/font_manager.dart';
 import 'package:squadio/views/resources/strings_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
+import 'package:squadio/views/components/styled_spacers.dart';
 
 class AppUpdateScreen extends StatelessWidget {
   AppUpdateScreen({Key? key}) : super(key: key);
@@ -29,9 +29,7 @@ class AppUpdateScreen extends StatelessWidget {
                 color: ColorManager.primary,
                 size: AppSize.s60,
               ),
-              const SizedBox(
-                height: AppSize.s12,
-              ),
+              VSpace.med,
               CustomText(
                 text:
                     "Sorry Your App needs an update to work properly please  update  now ",
@@ -40,9 +38,7 @@ class AppUpdateScreen extends StatelessWidget {
                 fontWeight: FontWeightManager.medium,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: AppSize.s40,
-              ),
+              VSpace.xxl,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -54,9 +50,7 @@ class AppUpdateScreen extends StatelessWidget {
                     color: ColorManager.primary,
                     onTap: appUpdateModel.onUpdateAppTapped,
                   ),
-                  const SizedBox(
-                    width: AppSize.s8,
-                  ),
+                  HSpace.sm,
                   CustomCircleButton(
                     height: SizeConfig.getProportionateScreenHeight(55),
                     width: SizeConfig.getProportionateScreenWidth(150),

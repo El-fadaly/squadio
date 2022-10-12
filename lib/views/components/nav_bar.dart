@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:squadio/views/components/custom_text_widget.dart';
-import 'package:squadio/views/resources/font_manager.dart';
+import 'package:squadio/views/resources/styles/font_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
+import 'package:squadio/views/components/styled_spacers.dart';
 
 class NavBar extends StatelessWidget {
   const NavBar({
@@ -43,9 +44,7 @@ class NavBar extends StatelessWidget {
                     color: Colors.white,
                   ),
                 )
-              : const SizedBox(
-                  width: AppSize.s12,
-                ),
+              : HSpace.med,
         ],
       ),
     );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:squadio/views/resources/color_manager.dart';
-import 'package:squadio/views/resources/font_manager.dart';
-import 'package:squadio/views/resources/styles_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
+import 'package:squadio/views/resources/styles/color_manager.dart';
+import 'package:squadio/views/resources/styles/font_manager.dart';
+import 'package:squadio/views/resources/styles/styles_manager.dart';
 import 'package:squadio/views/resources/values_manager.dart';
 
 ThemeData getApplicationTheme() {
